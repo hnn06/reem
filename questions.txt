@@ -7,11 +7,13 @@ performed on global memory for each of the following kernels?
 
 (1) The unoptimized kernel with no privatization in shared memory or thread
     coarsening.
+    we did operation for every element in the image=4096*4096=16777216
 
     
 
 (2) The kernel with privatization in shared memory but without thread
     coarsening.
+    4096*4096+1024*
 
     
 
