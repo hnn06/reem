@@ -8,8 +8,8 @@ __global__ void histogram_private_kernel(unsigned char* image, unsigned int* bin
     // TODO
     unsigned int i=blockIdx.x*blockDim.x+threadIdx.x;
     __shared__ unsigned int private_histogram[NUM_BINS];
-    if (threadIdx.x<NUM_BINS){
-        private_histogram[threadIdx.x]=0;
+    if (i<NUM_BINS){
+        private_histogram[i]=0;
     }
      __syncthreads();
     
