@@ -7,16 +7,12 @@ __global__ void histogram_private_kernel(unsigned char* image, unsigned int* bin
 
     // TODO
     unsigned int i=blockIdx.x*blockDim.x+threadIdx.x;
-    unsigned int j=NUM_BINS-blockDim.x;
-    if (NUM_BINS<blockDim.x){
-        j=0;
-    }
     
-    
+
     
     __shared__ unsigned int private_histogram[NUM_BINS];
-    if (threadIdx.x+j<NUM_BINS){
-        private_histogram[threadIdx.x+j]=0;
+    if (threadIdx.x<NUM_BINS){
+        private_histogram[threadIdx.x]=0;
     }
      __syncthreads();
     
@@ -30,7 +26,7 @@ __global__ void histogram_private_kernel(unsigned char* image, unsigned int* bin
     }
     __syncthreads();
     if (threadIdx.x+j<NUM_BINS){
-        atomicAdd(&bins[threadIdx.x+j],private_histogram[threadIdx.x+j]);
+        atomicAdd(&bins[threadIdx.x],private_histogram[threadIdx.x]);
     }
     
     
@@ -56,12 +52,9 @@ __global__ void histogram_private_coarse_kernel(unsigned char* image, unsigned i
     // TODO
     unsigned int i=coarse_factor*blockIdx.x*blockDim.x+threadIdx.x;
     __shared__ unsigned int private_histogram[NUM_BINS];
-    unsigned int j=NUM_BINS-blockDim.x;
-    if (NUM_BINS<blockDim.x){
-        j=0;
-    }
-    if (threadIdx.x+j<NUM_BINS){
-        private_histogram[threadIdx.x+j]=0;
+    
+    if (threadIdx.x<NUM_BINS){
+        private_histogram[threadIdx.x]=0;
     }
     __syncthreads();
     
@@ -72,8 +65,8 @@ __global__ void histogram_private_coarse_kernel(unsigned char* image, unsigned i
         }
     }
     __syncthreads();
-    if (threadIdx.x+j<NUM_BINS){
-        atomicAdd(&bins[threadIdx.x+j],private_histogram[threadIdx.x+j]);
+    if (threadIdx.x<NUM_BINS){
+        atomicAdd(&bins[threadIdx.x],private_histogram[threadIdx.x]);
     }
  
     
