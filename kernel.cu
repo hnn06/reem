@@ -34,7 +34,7 @@ void histogram_gpu_private(unsigned char* image_d, unsigned int* bins_d, unsigne
 
     // TODO
     unsigned int numThreadsPerBlock =1024;
-    unsigned int numBlocks=(width*height+*numThreadsPerBlock-1)/numThreadsPerBlock;
+    unsigned int numBlocks=(width*height+numThreadsPerBlock-1)/numThreadsPerBlock;
     histogram_private_kernel<<< numBlocks,numThreadsPerBlock>>> (image_d,bins_d,width,height);
     
 
