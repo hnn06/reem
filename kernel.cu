@@ -7,12 +7,12 @@ __global__ void histogram_private_kernel(unsigned char* image, unsigned int* bin
 
     // TODO
     unsigned int i=blockIdx.x*blockDim.x+threadIdx.x;
-    if (NUM_BINS>blockDim.x){
-        unsigned int j=NUM_BINS-blockDim.x;
+    unsigned int j=NUM_BINS-blockDim.x;
+    if (NUM_BINS<blockDim.x){
+        j=0;
     }
-    else{
-        unsigned int j=0;
-    }
+    
+    
     
     __shared__ unsigned int private_histogram[NUM_BINS];
     if (threadIdx.x+j<NUM_BINS){
