@@ -13,12 +13,13 @@ performed on global memory for each of the following kernels?
 
 (2) The kernel with privatization in shared memory but without thread
     coarsening.
-    4096*4096+1024*no of blocks=16777216+1024*16384=33554432
+    no of bins*no of blocks=256*16384=4194304
 
     
 
 (3) The kernel with both privatization in shared memory and thread coarsening
     with a coarsening factor of 64.
+    no of bins*no of blocks=256*(16384/64)=65536
 
     
 
